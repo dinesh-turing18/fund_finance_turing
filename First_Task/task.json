@@ -1,0 +1,279 @@
+{
+    "env": "fund_finance",
+    "model_provider": "fireworks",
+    "model": "qwen3-coder-480b-a35b-instruct",
+    "num_trials": 1,
+    "temperature": 1,
+    "interface_num": 3,
+    "task": {
+        "user_id": "39",
+        "instruction": "You are Brian Humphrey (brianhumphrey591@finance.com), and you are fund_manager. A new investor has submitted onboarding documents and received Compliance Officer approval. Please proceed with setting up the investor profile using the approved details. Once the profile is created, record the onboarding activity in the audit log. If the approval is missing, the details are incomplete or invalid, or if the registration fails for any reason, do not continue — escalate the issue to a human reviewer for resolution.",
+        "actions": [
+            {
+                "name": "find_user_entities",
+                "arguments": {
+                    "entity_type": "users",
+                    "filters": {
+                        "first_name": "Brian",
+                        "last_name": "Humphrey",
+                        "email": "brianhumphrey591@finance.com",
+                        "role" : "fund_manager"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "users",
+                    "results": [
+                    {
+                        "created_at": "2022-12-17T11:31:06",
+                        "email": "brianhumphrey591@finance.com",
+                        "first_name": "Brian",
+                        "last_name": "Humphrey",
+                        "role": "fund_manager",
+                        "status": "active",
+                        "timezone": "America/Los_Angeles",
+                        "updated_at": "2023-04-29T12:54:37",
+                        "user_id": "39"
+                    }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "find_fund_entities",
+                "arguments": {
+                    "entity_type": "funds",
+                    "filters": {
+                        "fund_id": "39"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "funds",
+                    "results": [
+                    {
+                        "created_at": "2025-08-10T09:16:03",
+                        "fund_id": "39",
+                        "fund_type": "mutual_funds",
+                        "manager_id": "73",
+                        "name": "Peters-Black Strategic Fund",
+                        "size": 207210537.83,
+                        "status": "open",
+                        "updated_at": "2025-08-15T17:26:32"
+                    }
+                    ],
+                "success": true
+                }
+            },
+            {
+                "name": "find_investor_entities",
+                "arguments": {
+                    "entity_type": "investors",
+                    "filters": {
+                        "investor_id": "39"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "investors",
+                    "results": [
+                    {
+                        "accreditation_status": "accredited",
+                        "address": "87431 Martin Mount Suite 205, Ashleyborough, HI 80580",
+                        "contact_email": "hebert2420@investment.com",
+                        "country": "Japan",
+                        "created_at": "2023-11-01T11:11:24",
+                        "date_of_incorporation": "2017-06-10",
+                        "investor_id": "39",
+                        "name": "Hebert LLC",
+                        "registration_number": 487953601,
+                        "source_of_funds": "government_grant",
+                        "status": "onboarded",
+                        "tax_id": "968-51-6122"
+                    }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "validate_approval",
+                "arguments": {
+                    "action": "investor_onboarding",
+                    "requester_email": "brianhumphrey591@finance.com"
+                },
+                "output": {
+                    "approval_valid": true,
+                    "approved_by": "compliance_officer"
+                }
+            },
+            {
+                "name": "register_investor",
+                "arguments": {
+                    "accreditation_status": "accredited",
+                    "compliance_officer_approval": true,
+                    "contact_email": "david.warner@nextgenfunds.com",
+                    "legal_name": "David Warner",
+                    "source_of_funds": "shareholder_capital"
+                },
+                "output": {
+                    "accreditation_status": "accredited",
+                    "address": null,
+                    "contact_email": "david.warner@nextgenfunds.com",
+                    "country": null,
+                    "created_at": "2025-10-01T00:00:00",
+                    "date_of_incorporation": null,
+                    "investor_id": "176",
+                    "name": "David Warner",
+                    "registration_number": null,
+                    "source_of_funds": "shareholder_capital",
+                    "status": "onboarded",
+                    "tax_id": null
+                }
+            },
+            {
+                "name": "find_portfolio_entities",
+                "arguments": {
+                    "entity_type": "portfolios",
+                    "filters": {
+                        "portfolio_id": "39"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "portfolios",
+                    "results": [
+                    {
+                        "created_at": "2025-05-19T12:05:57",
+                        "investor_id": "39",
+                        "portfolio_id": "39",
+                        "status": "active",
+                        "updated_at": "2025-07-19T07:03:32"
+                    }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "manipulate_fund",
+                "arguments": {
+                    "action": "create",
+                    "fund_data": {
+                    "base_currency": "USD",
+                    "compliance_officer_approval": true,
+                    "fund_manager_approval": true,
+                    "fund_type": "multi_asset_funds",
+                    "manager_id": "20",
+                    "name": "Export Deal Fund",
+                    "status": "open"
+                    }
+                },
+                "output": {
+                    "action": "create",
+                    "fund_data": {
+                    "base_currency": "USD",
+                    "created_at": "2025-10-01T12:00:00",
+                    "fund_id": "103",
+                    "fund_type": "multi_asset_funds",
+                    "manager_id": "20",
+                    "name": "Export Deal Fund",
+                    "size": null,
+                    "status": "open",
+                    "updated_at": "2025-10-01T12:00:00"
+                    },
+                    "fund_id": "103",
+                    "message": "Fund 103 created successfully with name 'Export Deal Fund'",
+                    "success": true
+                }
+            }
+        ],
+        "outputs": [
+            "39",
+            "73",
+            "fund_manager",
+            "Japan"
+        ],
+        "edges": [
+            {
+            "from": "instruction",
+            "to": "find_user_entities",
+            "connection": {
+                "output": "entity_type, first_name, last_name, email, role",
+                "input": "entity_type, filters.first_name, filters.last_name, filters.email, filters.role"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "find_fund_entities",
+            "connection": {
+                "output": "entity_type, fund_id",
+                "input": "entity_type, filters.fund_id"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "find_investor_entities",
+            "connection": {
+                "output": "entity_type, investor_id",
+                "input": "entity_type, filters.investor_id"
+            }
+            },
+            {
+            "from": "find_user_entities",
+            "to": "validate_approval",
+            "connection": {
+                "output": "results[0].email",
+                "input": "requester_email"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "validate_approval",
+            "connection": {
+                "output": "action",
+                "input": "action"
+            }
+            },
+            {
+            "from": "validate_approval",
+            "to": "register_investor",
+            "connection": {
+                "output": "approval_valid",
+                "input": "compliance_officer_approval"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "register_investor",
+            "connection": {
+                "output": "accreditation_status, contact_email, legal_name, source_of_funds",
+                "input": "accreditation_status, contact_email, legal_name, source_of_funds"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "find_portfolio_entities",
+            "connection": {
+                "output": "entity_type, portfolio_id",
+                "input": "entity_type, filters.portfolio_id"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "manipulate_fund",
+            "connection": {
+                "output": "action, base_currency, fund_type, manager_id, name, status",
+                "input": "action, fund_data.base_currency, fund_data.fund_type, fund_data.manager_id, fund_data.name, fund_data.status"
+            }
+            },
+            {
+            "from": "validate_approval",
+            "to": "manipulate_fund",
+            "connection": {
+                "output": "approval_valid, approval_valid",
+                "input": "fund_data.compliance_officer_approval, fund_data.fund_manager_approval"
+            }
+            }
+        ],
+        "num_edges": 10
+    }
+}
