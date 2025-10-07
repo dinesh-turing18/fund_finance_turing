@@ -1,0 +1,461 @@
+{
+    "env": "fund_finance",
+    "model_provider": "fireworks",
+    "model": "qwen3-coder-480b-a35b-instruct",
+    "num_trials": 1,
+    "temperature": 1,
+    "interface_num": 3,
+    "task": {
+        "user_id": "16",
+        "instruction": "You are Francisco Kelly (fkelly@gmail.com), a Finance Officer.Using the approved details from Compliance Officer Joseph Williams (josephwilliams@gmail.com), create a new fund named Day and Sons Strategic Fund of type Exchange Traded Fund (ETF), managed by investor Welch-Hogan.Once the fund is successfully created, record the fund creation activity in the audit log for compliance tracking.",
+        "actions": [
+            {
+                "name": "validate_approval",
+                "arguments": {
+                    "action": "fund_management_maintenance",
+                    "requester_email": "fkelly@gmail.com"
+                },
+                "output": {
+                    "approval_valid": true,
+                    "approved_by": [
+                    "fund_manager",
+                    "compliance_officer"
+                    ]
+                }
+            },
+            {
+                "name": "register_investor",
+                "arguments": {
+                    "accreditation_status": "accredited",
+                    "compliance_officer_approval": true,
+                    "contact_email": "stevenkrant@nextgenfunds.com",
+                    "legal_name": "Steven Krant",
+                    "source_of_funds": "shareholder_capital"
+                },
+                "output": {
+                    "accreditation_status": "accredited",
+                    "address": null,
+                    "contact_email": "stevenkrant@nextgenfunds.com",
+                    "country": null,
+                    "created_at": "2025-10-01T00:00:00",
+                    "date_of_incorporation": null,
+                    "investor_id": "176",
+                    "name": "Steven Krant",
+                    "registration_number": null,
+                    "source_of_funds": "shareholder_capital",
+                    "status": "onboarded",
+                    "tax_id": null
+                }
+            },
+            {
+                "name": "register_new_audit_trail",
+                "arguments": {
+                    "action":"create",
+                    "reference_id": "16",
+                    "reference_type": "fund"
+                },
+                "output": {
+                    "action": "create",
+                    "audit_trail_id": "3501",
+                    "created_at": "2025-10-01T00:00:00",
+                    "field_name": null,
+                    "new_value": null,
+                    "old_value": null,
+                    "reference_id": "16",
+                    "reference_type": "fund"
+                }
+            },
+            {
+                "name": "manipulate_fund",
+                "arguments": {
+                    "action": "create",
+                    "fund_data": {
+                    "base_currency": "USD",
+                    "compliance_officer_approval": true,
+                    "fund_manager_approval": true,
+                    "fund_type": "multi_asset_funds",
+                    "manager_id": "16",
+                    "name": "Future Gen Fund",
+                    "status": "open"
+                    }
+                },
+                "output": {
+                    "action": "create",
+                    "fund_data": {
+                    "base_currency": "USD",
+                    "created_at": "2025-10-01T12:00:00",
+                    "fund_id": "101",
+                    "fund_type": "multi_asset_funds",
+                    "manager_id": "16",
+                    "name": "Future Gen Fund",
+                    "size": null,
+                    "status": "open",
+                    "updated_at": "2025-10-01T12:00:00"
+                    },
+                    "fund_id": "101",
+                    "message": "Fund 101 created successfully with name 'Future Gen Fund'",
+                    "success": true
+                }
+            },
+            {
+                "name": "find_fund_entities",
+                "arguments": {
+                    "entity_type": "funds",
+                    "filters": {
+                        "name": "Day and Sons Strategic Fund"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "funds",
+                    "results": [
+                    {
+                        "created_at": "2025-01-09T21:18:03",
+                        "fund_id": "16",
+                        "fund_type": "exchange_traded_funds",
+                        "manager_id": "108",
+                        "name": "Day and Sons Strategic Fund",
+                        "size": 343539058.11,
+                        "status": "open",
+                        "updated_at": "2025-01-20T09:54:36"
+                    }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "register_new_audit_trail",
+                "arguments": {
+                    "action":"create",
+                    "reference_id": "16",
+                    "reference_type": "subscription"
+                },
+                "output": {
+                    "action": "create",
+                    "audit_trail_id": "3501",
+                    "created_at": "2025-10-01T00:00:00",
+                    "field_name": null,
+                    "new_value": null,
+                    "old_value": null,
+                    "reference_id": "16",
+                    "reference_type": "subscription"
+                }
+            },
+            {
+                "name": "register_commitment",
+                "arguments": {
+                    "commitment_amount":"300000",
+                    "commitment_date":"2025-10-06",
+                    "compliance_officer_approval":true,
+                    "fund_id": "16",
+                    "investor_id":"6"
+                },
+                "output": {
+                    "commitment_amount": 300000,
+                    "commitment_date": "2025-10-06",
+                    "commitment_id": "2001",
+                    "fund_id": "16",
+                    "investor_id": "16",
+                    "status": "pending",
+                    "updated_at": "2025-10-01T00:00:00"
+                }
+            },
+            {
+                "name": "manipulate_subscription",
+                "arguments": {
+                    "action": "create",
+                    "subscription_data": {
+                        "fund_id": "16",
+                        "investor_id": "17",
+                        "amount":"150000",
+                        "request_date":"2024-10-04",
+                        "request_assigned_to":"37",
+                        "notify_investor": true,
+                        "fund_manager_approval":true,
+                        "compliance_officer_approval": true
+                    }
+                },
+                "output": {
+                    "action": "create",
+                    "message": "Subscription 2501 created successfully.",
+                    "subscription_data": {
+                    "amount": "150000",
+                    "approval_date": null,
+                    "fund_id": "16",
+                    "investor_id": "17",
+                    "request_assigned_to": "37",
+                    "request_date": "2024-10-04",
+                    "status": "pending",
+                    "subscription_id": "2501",
+                    "updated_at": "2025-10-01T00:00:00"
+                    },
+                    "subscription_id": "2501",
+                    "success": true
+                }
+            },
+            {
+                "name": "conduct_trade",
+                "arguments": {
+                    "fund_id": "16",
+                    "fund_manager_approval": true,
+                    "instrument_id": "16",
+                    "price": "100000",
+                    "quantity": "50",
+                    "side": "buy",
+                    "trade_date": "2025-10-06"
+                },
+                "output": {
+                    "message": "Trade 2501 executed successfully",
+                    "success": true,
+                    "trade_data": {
+                    "created_at": "2025-10-01T00:00:00",
+                    "fund_id": "16",
+                    "instrument_id": "16",
+                    "price": 100000.0,
+                    "quantity": 50.0,
+                    "side": "buy",
+                    "status": "executed",
+                    "trade_date": "2025-10-06",
+                    "trade_id": "2501"
+                    },
+                    "trade_id": "2501"
+                }
+            },
+            {
+                "name": "manipulate_nav_record",
+                "arguments": {
+                    "action": "create",
+                    "nav_data": {
+                        "fund_id": "16",
+                        "nav_date":"2024-10-04",
+                        "nav_value": 25000,
+                        "finance_officer_approval": true
+                    }
+                },
+                "output": {
+                    "action": "create",
+                    "message": "NAV record 1286 created successfully for fund 16 on 2024-10-04",
+                    "nav_data": {
+                    "fund_id": "16",
+                    "nav_date": "2024-10-04",
+                    "nav_id": "1286",
+                    "nav_value": 25000,
+                    "updated_at": "2025-10-01T12:00:00"
+                    },
+                    "nav_id": "1286",
+                    "success": true
+                }
+            },
+            {
+                "name": "find_valuation_entities",
+                "arguments": {
+                    "entity_type": "nav_records",
+                    "filters": {
+                        "nav_id": "1286",
+                        "fund_id": "16"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "nav_records",
+                    "results": [
+                    {
+                        "fund_id": "16",
+                        "nav_date": "2024-10-04",
+                        "nav_id": "1286",
+                        "nav_value": 25000,
+                        "updated_at": "2025-10-01T12:00:00"
+                    }
+                    ],
+                    "success": true
+                }
+            },
+            {
+                "name": "register_new_audit_trail",
+                "arguments": {
+                    "action":"create",
+                    "reference_id": "16",
+                    "reference_type": "nav"
+                },
+                "output": {
+                    "action": "create",
+                    "audit_trail_id": "3502",
+                    "created_at": "2025-10-01T00:00:00",
+                    "field_name": null,
+                    "new_value": null,
+                    "old_value": null,
+                    "reference_id": "16",
+                    "reference_type": "nav"
+                }
+            }
+        ],
+        "outputs": [
+            "16",
+            "100000",
+            "fund_manager"
+        ],
+        "edges": [
+            {
+            "from": "instruction",
+            "to": "validate_approval",
+            "connection": {
+                "output": "action, requester_email",
+                "input": "action, requester_email"
+            }
+            },
+            {
+            "from": "validate_approval",
+            "to": "register_investor",
+            "connection": {
+                "output": "approval_valid",
+                "input": "compliance_officer_approval"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "register_investor",
+            "connection": {
+                "output": "accreditation_status, contact_email, legal_name, source_of_funds",
+                "input": "accreditation_status, contact_email, legal_name, source_of_funds"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "register_new_audit_trail",
+            "connection": {
+                "output": "action, reference_id, reference_type",
+                "input": "action, reference_id, reference_type"
+            }
+            },
+            {
+            "from": "validate_approval",
+            "to": "manipulate_fund",
+            "connection": {
+                "output": "approval_valid, approval_valid",
+                "input": "compliance_officer_approval, fund_manager_approval"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "manipulate_fund",
+            "connection": {
+                "output": "base_currency, fund_type, manager_id, name, status",
+                "input": "base_currency, fund_type, manager_id, name, status"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "find_fund_entities",
+            "connection": {
+                "output": "entity_type, name",
+                "input": "entity_type, name"
+            }
+            },
+            {
+            "from": "find_fund_entities",
+            "to": "register_commitment",
+            "connection": {
+                "output": "results[0].fund_id",
+                "input": "fund_id"
+            }
+            },
+            {
+            "from": "validate_approval",
+            "to": "register_commitment",
+            "connection": {
+                "output": "approval_valid",
+                "input": "compliance_officer_approval"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "register_commitment",
+            "connection": {
+                "output": "commitment_amount, commitment_date, investor_id",
+                "input": "commitment_amount, commitment_date, investor_id"
+            }
+            },
+            {
+            "from": "find_fund_entities",
+            "to": "manipulate_subscription",
+            "connection": {
+                "output": "results[0].fund_id",
+                "input": "fund_id"
+            }
+            },
+            {
+            "from": "validate_approval",
+            "to": "manipulate_subscription",
+            "connection": {
+                "output": "approval_valid, approval_valid",
+                "input": "fund_manager_approval, compliance_officer_approval"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "manipulate_subscription",
+            "connection": {
+                "output": "investor_id, amount, request_date, request_assigned_to, notify_investor",
+                "input": "investor_id, amount, request_date, request_assigned_to, notify_investor"
+            }
+            },
+            {
+            "from": "find_fund_entities",
+            "to": "conduct_trade",
+            "connection": {
+                "output": "results[0].fund_id",
+                "input": "fund_id"
+            }
+            },
+            {
+            "from": "validate_approval",
+            "to": "conduct_trade",
+            "connection": {
+                "output": "approval_valid",
+                "input": "fund_manager_approval"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "conduct_trade",
+            "connection": {
+                "output": "instrument_id, price, quantity, side, trade_date",
+                "input": "instrument_id, price, quantity, side, trade_date"
+            }
+            },
+            {
+            "from": "find_fund_entities",
+            "to": "manipulate_nav_record",
+            "connection": {
+                "output": "results[0].fund_id",
+                "input": "fund_id"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "manipulate_nav_record",
+            "connection": {
+                "output": "nav_date, nav_value, finance_officer_approval",
+                "input": "nav_date, nav_value, finance_officer_approval"
+            }
+            },
+            {
+            "from": "manipulate_nav_record",
+            "to": "find_valuation_entities",
+            "connection": {
+                "output": "nav_data.nav_id, nav_data.fund_id",
+                "input": "nav_id, fund_id"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "find_valuation_entities",
+            "connection": {
+                "output": "entity_type",
+                "input": "entity_type"
+            }
+            }
+        ],
+        "num_edges": 20
+    }
+}
