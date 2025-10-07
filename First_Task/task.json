@@ -7,8 +7,38 @@
     "interface_num": 3,
     "task": {
         "user_id": "39",
-        "instruction": "You are Brian Humphrey (brianhumphrey591@finance.com), a fund manager. A new investor has submitted onboarding documents that have been approved by Douglas Taylor (dtaylor@gmail.com), the Compliance Officer. Create a new fund and set up the investor's profile in this fund using the approved details. Provide the finalized investor profile data as output.",
+        "instruction": "You are Brian Humphrey (brianhumphrey591@finance.com), a Fund Manager. A new investor, David Warner (david.warner@nextgenfunds.com), has been approved by Douglas Taylor (dtaylor@gmail.com), the Compliance Officer. Onboard the investor using the approved details and record the source of funds as shareholder capital. Subscribe them to the Export Deal Fund, a Multi Asset Fund with USD as the base currency. After onboarding, upload the Source_Of_Income document in PDF format, uploaded by Brian Humphrey, and then send a report notification under the funds category to David Warner.",
         "actions": [
+            {
+                "name": "find_user_entities",
+                "arguments": {
+                    "entity_type": "users",
+                    "filters": {
+                        "first_name": "Brian",
+                        "last_name": "Humphrey",
+                        "email": "brianhumphrey591@finance.com",
+                        "role" : "fund_manager"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "users",
+                    "results": [
+                    {
+                        "created_at": "2022-12-17T11:31:06",
+                        "email": "brianhumphrey591@finance.com",
+                        "first_name": "Brian",
+                        "last_name": "Humphrey",
+                        "role": "fund_manager",
+                        "status": "active",
+                        "timezone": "America/Los_Angeles",
+                        "updated_at": "2023-04-29T12:54:37",
+                        "user_id": "39"
+                    }
+                    ],
+                    "success": true
+                }
+            },
             {
                 "name": "validate_approval",
                 "arguments": {
@@ -53,36 +83,6 @@
                 }
             },
             {
-                "name": "find_user_entities",
-                "arguments": {
-                    "entity_type": "users",
-                    "filters": {
-                        "first_name": "Brian",
-                        "last_name": "Humphrey",
-                        "email": "brianhumphrey591@finance.com",
-                        "role" : "fund_manager"
-                    }
-                },
-                "output": {
-                    "count": 1,
-                    "entity_type": "users",
-                    "results": [
-                    {
-                        "created_at": "2022-12-17T11:31:06",
-                        "email": "brianhumphrey591@finance.com",
-                        "first_name": "Brian",
-                        "last_name": "Humphrey",
-                        "role": "fund_manager",
-                        "status": "active",
-                        "timezone": "America/Los_Angeles",
-                        "updated_at": "2023-04-29T12:54:37",
-                        "user_id": "39"
-                    }
-                    ],
-                    "success": true
-                }
-            },
-            {
                 "name": "register_investor",
                 "arguments": {
                     "accreditation_status": "accredited",
@@ -107,53 +107,22 @@
                 }
             },
             {
-                "name": "manipulate_portfolio",
+                "name": "submit_document",
                 "arguments": {
-                    "action": "create",
-                    "portfolio_data":{
-                        "investor_id": "176",
-                        "fund_manager_approval": true,
-                        "finance_officer_approval": true
-                    }
+                    "format": "pdf",
+                    "name": "Source_Of_Income",
+                    "uploaded_by": "39"
                 },
                 "output": {
-                    "action": "create",
-                    "message": "Portfolio 176 created successfully for investor 176",
-                    "portfolio_data": {
-                    "created_at": "2025-10-01T12:00:00",
-                    "investor_id": "176",
-                    "portfolio_id": "176",
-                    "status": "active",
-                    "updated_at": "2025-10-01T12:00:00"
-                    },
-                    "portfolio_id": "176",
-                    "success": true
-                }
-            },
-            {
-                "name": "find_fund_entities",
-                "arguments": {
-                    "entity_type": "funds",
-                    "filters": {
-                        "name": "Peters-Black Strategic Fund"
-                    }
-                },
-                "output": {
-                    "count": 1,
-                    "entity_type": "funds",
-                    "results": [
-                    {
-                        "created_at": "2025-08-10T09:16:03",
-                        "fund_id": "39",
-                        "fund_type": "mutual_funds",
-                        "manager_id": "73",
-                        "name": "Peters-Black Strategic Fund",
-                        "size": 207210537.83,
-                        "status": "open",
-                        "updated_at": "2025-08-15T17:26:32"
-                    }
-                    ],
-                    "success": true
+                    "confidentiality_level": "internal",
+                    "document_id": "1002",
+                    "format": "pdf",
+                    "name": "Source_Of_Income",
+                    "report_id": null,
+                    "size_bytes": null,
+                    "status": "available",
+                    "upload_date": "2025-10-01T00:00:00",
+                    "uploaded_by": "39"
                 }
             },
             {
@@ -168,29 +137,36 @@
                 },
                 "output": {
                     "action": "create",
-                    "message": "Notification 1501 created successfully for david.warner@nextgenfunds.com",
+                    "message": "Notification 1502 created successfully for david.warner@nextgenfunds.com",
                     "notification_data": {
                     "class": "funds",
                     "created_at": "2025-10-01T12:00:00",
                     "email": "david.warner@nextgenfunds.com",
-                    "notification_id": "1501",
+                    "notification_id": "1502",
                     "reference_id": null,
                     "sent_at": null,
                     "status": "pending",
                     "type": "report"
                     },
-                    "notification_id": "1501",
+                    "notification_id": "1502",
                     "success": true
                 }
             }
         ],
         "outputs": [
             "39",
-            "73",
-            "fund_manager",
-            "Peters-Black Strategic Fund"
+            "multi_asset_funds",
+            "fund_manager"
         ],
         "edges": [
+            {
+            "from": "instruction",
+            "to": "find_user_entities",
+            "connection": {
+                "output": "first_name, last_name, email, role",
+                "input": "first_name, last_name, email, role"
+            }
+            },
             {
             "from": "instruction",
             "to": "validate_approval",
@@ -200,35 +176,27 @@
             }
             },
             {
-            "from": "validate_approval",
-            "to": "manipulate_fund",
-            "connection": {
-                "output": "approval_valid, approval_valid",
-                "input": "fund_data.compliance_officer_approval, fund_data.fund_manager_approval"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "manipulate_fund",
-            "connection": {
-                "output": "action, base_currency, fund_type, name, status",
-                "input": "action, fund_data.base_currency, fund_data.fund_type, fund_data.name, fund_data.status"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "find_user_entities",
-            "connection": {
-                "output": "entity_type, first_name, last_name, email, role",
-                "input": "entity_type, filters.first_name, filters.last_name, filters.email, filters.role"
-            }
-            },
-            {
             "from": "find_user_entities",
             "to": "manipulate_fund",
             "connection": {
                 "output": "results[0].user_id",
-                "input": "fund_data.manager_id"
+                "input": "manager_id"
+            }
+            },
+            {
+            "from": "validate_approval",
+            "to": "manipulate_fund",
+            "connection": {
+                "output": "approval_valid, approval_valid",
+                "input": "compliance_officer_approval, fund_manager_approval"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "manipulate_fund",
+            "connection": {
+                "output": "name, fund_type, base_currency",
+                "input": "name, fund_type, base_currency"
             }
             },
             {
@@ -243,40 +211,24 @@
             "from": "instruction",
             "to": "register_investor",
             "connection": {
-                "output": "accreditation_status, contact_email, legal_name, source_of_funds",
-                "input": "accreditation_status, contact_email, legal_name, source_of_funds"
+                "output": "legal_name, contact_email, accreditation_status, source_of_funds",
+                "input": "legal_name, contact_email, accreditation_status, source_of_funds"
             }
             },
             {
-            "from": "register_investor",
-            "to": "manipulate_portfolio",
+            "from": "find_user_entities",
+            "to": "submit_document",
             "connection": {
-                "output": "investor_id",
-                "input": "portfolio_data.investor_id"
-            }
-            },
-            {
-            "from": "validate_approval",
-            "to": "manipulate_portfolio",
-            "connection": {
-                "output": "approval_valid, approval_valid",
-                "input": "portfolio_data.fund_manager_approval, portfolio_data.finance_officer_approval"
+                "output": "results[0].user_id",
+                "input": "uploaded_by"
             }
             },
             {
             "from": "instruction",
-            "to": "manipulate_portfolio",
+            "to": "submit_document",
             "connection": {
-                "output": "action",
-                "input": "action"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "find_fund_entities",
-            "connection": {
-                "output": "entity_type, name",
-                "input": "entity_type, filters.name"
+                "output": "name, format",
+                "input": "name, format"
             }
             },
             {
@@ -284,18 +236,18 @@
             "to": "manipulate_notifications",
             "connection": {
                 "output": "contact_email",
-                "input": "notification_data.email"
+                "input": "email"
             }
             },
             {
             "from": "instruction",
             "to": "manipulate_notifications",
             "connection": {
-                "output": "action, type, class",
-                "input": "action, notification_data.type, notification_data.class"
+                "output": "type, class",
+                "input": "type, class"
             }
             }
         ],
-        "num_edges": 13
+        "num_edges": 11
     }
 }
