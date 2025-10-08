@@ -6,9 +6,39 @@
     "temperature": 1,
     "interface_num": 3,
     "task": {
-        "user_id": "117",
-        "instruction": "You are Jessica Cabrera (jessica.cabrera@outlook.com), a finance officer. Using the approved details from Compliance Officer William Leon (william.leon@investment.com), create a new commitment for the existing investor Sampson-Foley in the Cortez Group Strategic Fund. Once the commitment is registered, record the creation activity in the audit log.",
+        "user_id": "40",
+        "instruction": "You are Jessica Cabrera (jessica.cabrera@outlook.com), a Finance Officer. Using the approved details from Compliance Officer William Leon (william.leon@investment.com), create a new commitment of 500,000 dated October 6, 2025, for the existing investor Sampson-Foley in the Cortez Group Strategic Fund.",
         "actions": [
+            {
+                "name": "find_user_entities",
+                "arguments": {
+                    "entity_type": "users",
+                    "filters": {
+                        "first_name": "Jessica",
+                        "last_name": "Cabrera",
+                        "email": "jessica.cabrera@outlook.com",
+                        "role" : "finance_officer"
+                    }
+                },
+                "output": {
+                    "count": 1,
+                    "entity_type": "users",
+                    "results": [
+                    {
+                        "created_at": "2024-11-21T15:58:05",
+                        "email": "jessica.cabrera@outlook.com",
+                        "first_name": "Jessica",
+                        "last_name": "Cabrera",
+                        "role": "finance_officer",
+                        "status": "active",
+                        "timezone": "America/Chicago",
+                        "updated_at": "2025-01-09T12:08:27",
+                        "user_id": "40"
+                    }
+                    ],
+                    "success": true
+                }
+            },
             {
                 "name": "validate_approval",
                 "arguments": {
@@ -79,7 +109,7 @@
             {
                 "name": "register_commitment",
                 "arguments": {
-                    "commitment_amount": "500000",
+                    "commitment_amount": 500000,
                     "commitment_date": "2025-10-06",
                     "compliance_officer_approval": true,
                     "fund_id": "40",
@@ -123,67 +153,6 @@
                     "approval_valid": true,
                     "approved_by": "compliance_officer"
                 }
-            },
-            {
-                "name": "manipulate_payment",
-                "arguments": {
-                    "action": "create",
-                    "payment_data": {
-                        "invoice_id":"1231",
-                        "subscription_id":"2121",
-                        "payment_date":"2025-10-06",
-                        "amount": "250000",
-                        "payment_method": "credit_card",
-                        "finance_officer_approval": true
-                    }
-                },
-                "output": {
-                    "action": "create",
-                    "message": "Payment 2251 created successfully for invoice 1231",
-                    "payment_data": {
-                    "amount": 250000,
-                    "created_at": "2025-10-01T12:00:00",
-                    "invoice_id": "1231",
-                    "payment_date": "2025-10-06",
-                    "payment_id": "2251",
-                    "payment_method": "credit_card",
-                    "status": "draft",
-                    "subscription_id": "2121"
-                    },
-                    "payment_id": "2251",
-                    "success": true
-                }
-            },
-            
-            {
-                "name": "find_user_entities",
-                "arguments": {
-                    "entity_type": "users",
-                    "filters": {
-                        "first_name": "Jessica",
-                        "last_name": "Cabrera",
-                        "email": "jessica.cabrera@outlook.com",
-                        "role" : "finance_officer"
-                    }
-                },
-                "output": {
-                    "count": 1,
-                    "entity_type": "users",
-                    "results": [
-                    {
-                        "created_at": "2024-11-21T15:58:05",
-                        "email": "jessica.cabrera@outlook.com",
-                        "first_name": "Jessica",
-                        "last_name": "Cabrera",
-                        "role": "finance_officer",
-                        "status": "active",
-                        "timezone": "America/Chicago",
-                        "updated_at": "2025-01-09T12:08:27",
-                        "user_id": "40"
-                    }
-                    ],
-                    "success": true
-                }
             }
         ],
         "outputs": [
@@ -194,26 +163,42 @@
         "edges": [
             {
             "from": "instruction",
+            "to": "find_user_entities",
+            "connection": {
+                "output": "first_name, last_name, email, role",
+                "input": "first_name, last_name, email, role"
+            }
+            },
+            {
+            "from": "find_user_entities",
             "to": "validate_approval",
             "connection": {
-                "output": "action, requester_email",
-                "input": "action, requester_email"
+                "output": "results[0].email",
+                "input": "requester_email"
+            }
+            },
+            {
+            "from": "instruction",
+            "to": "validate_approval",
+            "connection": {
+                "output": "action",
+                "input": "action"
             }
             },
             {
             "from": "instruction",
             "to": "find_investor_entities",
             "connection": {
-                "output": "entity_type, name",
-                "input": "entity_type, filters.name"
+                "output": "name",
+                "input": "name"
             }
             },
             {
             "from": "instruction",
             "to": "find_fund_entities",
             "connection": {
-                "output": "entity_type, name",
-                "input": "entity_type, filters.name"
+                "output": "name",
+                "input": "name"
             }
             },
             {
@@ -249,14 +234,6 @@
             }
             },
             {
-            "from": "find_investor_entities",
-            "to": "register_new_audit_trail",
-            "connection": {
-                "output": "results[0].investor_id",
-                "input": "reference_id"
-            }
-            },
-            {
             "from": "instruction",
             "to": "register_new_audit_trail",
             "connection": {
@@ -265,30 +242,14 @@
             }
             },
             {
-            "from": "validate_approval",
-            "to": "manipulate_payment",
+            "from": "find_investor_entities",
+            "to": "register_new_audit_trail",
             "connection": {
-                "output": "approval_valid",
-                "input": "payment_data.finance_officer_approval"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "manipulate_payment",
-            "connection": {
-                "output": "action, invoice_id, subscription_id, payment_date, amount, payment_method",
-                "input": "action, payment_data.invoice_id, payment_data.subscription_id, payment_data.payment_date, payment_data.amount, payment_data.payment_method"
-            }
-            },
-            {
-            "from": "instruction",
-            "to": "find_user_entities",
-            "connection": {
-                "output": "entity_type, first_name, last_name, email, role",
-                "input": "entity_type, filters.first_name, filters.last_name, filters.email, filters.role"
+                "output": "results[0].investor_id",
+                "input": "reference_id"
             }
             }
         ],
-        "num_edges": 12
+        "num_edges": 11
     }
 }
